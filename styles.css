@@ -184,6 +184,7 @@ ul { padding-left: 1.2em; }
   color: var(--rose-dark); margin-bottom: 0.5rem;
 }
 .hero .btn-row { justify-content: center; }
+.h1-sub { display: inline-block; margin-top: 0.3em; font-size: 0.52em; font-weight: 500; line-height: 1.3; color: var(--rose-dark); }
 .page-hero { padding: 40px 0 44px; background: linear-gradient(160deg, var(--beige), var(--cream)); }
 .page-hero p.lead { max-width: 680px; margin-bottom: 0; }
 .breadcrumb { font-size: 0.88rem; color: var(--muted); margin-bottom: 0.8rem; }
