@@ -334,16 +334,15 @@ ul { padding-left: 1.2em; }
 }
 
 /* ==========================================================================
-   Featurable reviews widget: match the Stylish Brow Bar look
-   HOW TO USE: paste this whole block at the very END of styles.css.
-   (Not into Featurable's own custom-CSS box.)
+   Featurable reviews widget: match the Stylish Brow Bar look   (version 2)
+   HOW TO USE: in styles.css, DELETE the earlier "Featurable reviews widget" block
+   (from its comment to the end of the file) and paste this whole file in its place,
+   at the very end of styles.css. Do not use Featurable's own custom-CSS box.
 
-   Why it's written this way:
-   - Featurable's class names end in random text (e.g. ReviewCard-module__reviewCard--MGb_l),
-     so we match the stable first part with [class*="..."].
-   - The widget uses its own !important and inline styles, so these rules use
-     #google-reviews-widget (the wrapper already on reviews.html) plus !important.
-   Colours used: cream #FBF7F1, charcoal #2D2A27, muted #625A53, line #E4D8C8,
+   Built from the real widget HTML. Where Featurable publishes stable class names
+   (.summary-bar__btn, .review__reviewer-name ...) we use those. Colours are set with
+   !important because the widget sets some colours inline (e.g. the stars).
+   Palette: cream #FBF7F1, charcoal #2D2A27, muted #625A53, line #E4D8C8,
    gold #B8935A (stars), dark gold #8F6B3E (buttons/links).
    ========================================================================== */
 
@@ -367,41 +366,54 @@ ul { padding-left: 1.2em; }
   font-weight: 600 !important;
 }
 
-/* Review cards */
-#google-reviews-widget [class*="ReviewCard-module__reviewCard"] {
+/* ---------- Summary bar ("Excellent 5.0 · Google · Based on 61 reviews · Write a review") ---------- */
+#google-reviews-widget .summary-bar {
   background: #FFFFFF !important;
   border: 1px solid #E4D8C8 !important;
   border-radius: 14px !important;
   box-shadow: 0 8px 24px rgba(45, 42, 39, 0.08) !important;
-  color: #2D2A27 !important;
 }
-
-/* Review text: serif, like the rest of the site's quotes */
-#google-reviews-widget [class*="ReviewCard-module__reviewBody"] {
+#google-reviews-widget .summary-bar__label {
   color: #2D2A27 !important;
   font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif !important;
-  font-size: 1.05rem !important;
-  line-height: 1.55 !important;
+  font-weight: 600 !important;
 }
-
-/* Reviewer name */
-#google-reviews-widget [class*="ReviewCard-module__reviewerName"],
-#google-reviews-widget [class*="ReviewCard-module__title"] {
+#google-reviews-widget .summary-bar__rating {
   color: #2D2A27 !important;
   font-weight: 600 !important;
 }
-
-/* "Read more" inside a card */
-#google-reviews-widget [class*="ReviewCard-module__readMore"] {
+#google-reviews-widget .summary-bar__sublabel {
+  color: #625A53 !important;
+}
+#google-reviews-widget .summary-bar__profile-link {
   color: #8F6B3E !important;
 }
 
-/* Gold stars (works whether the star uses fill or currentColor) */
+/* "Write a review" button */
+#google-reviews-widget .summary-bar__btn {
+  background: #8F6B3E !important;
+  border: 2px solid #8F6B3E !important;
+  color: #FFFFFF !important;
+  border-radius: 999px !important;
+  font-weight: 600 !important;
+}
+#google-reviews-widget .summary-bar__btn:hover {
+  background: #765632 !important;
+  border-color: #765632 !important;
+}
+
+/* ---------- Stars (the widget sets their colour inline, so !important is needed) ---------- */
+#google-reviews-widget .star-rating__fill span,
+#google-reviews-widget .star-rating__fill svg {
+  color: #B8935A !important;
+}
+#google-reviews-widget .star-rating__empty span,
+#google-reviews-widget .star-rating__empty svg {
+  color: #E4D8C8 !important;
+}
+/* stars inside the review cards */
 #google-reviews-widget [class*="StarRating-module__starFilled"] {
   color: #B8935A !important;
-  fill: #B8935A !important;
-}
-#google-reviews-widget [class*="StarRating-module__starFilled"] path {
   fill: #B8935A !important;
 }
 #google-reviews-widget [class*="StarRating-module__starEmpty"] {
@@ -409,7 +421,38 @@ ul { padding-left: 1.2em; }
   fill: #E4D8C8 !important;
 }
 
-/* Carousel arrows */
+/* ---------- Review cards ---------- */
+#google-reviews-widget [class*="ReviewCard-module__reviewCard"] {
+  background: #FFFFFF !important;
+  border: 1px solid #E4D8C8 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 8px 24px rgba(45, 42, 39, 0.08) !important;
+  color: #2D2A27 !important;
+}
+#google-reviews-widget .review__reviewer-name {
+  color: #2D2A27 !important;
+  font-weight: 600 !important;
+}
+#google-reviews-widget [class*="review__date"] {
+  color: #625A53 !important;
+}
+/* review text: serif, like the rest of the site's quotes */
+#google-reviews-widget [class*="ReviewCard-module__reviewBody"] {
+  color: #2D2A27 !important;
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif !important;
+  font-size: 1.05rem !important;
+  line-height: 1.55 !important;
+}
+#google-reviews-widget [class*="ReviewCard-module__readMore"] {
+  color: #8F6B3E !important;
+}
+/* round initial avatars (shown when a reviewer has no photo): one calm gold instead of random colours */
+#google-reviews-widget [class*="ReviewCard-module__fallback"] {
+  background-color: #B8935A !important;
+  color: #FFFFFF !important;
+}
+
+/* ---------- Carousel arrows ---------- */
 #google-reviews-widget [class*="Carousel-module__btn"],
 #google-reviews-widget [class*="Slider-module__btn"] {
   background: #FFFFFF !important;
@@ -417,20 +460,5 @@ ul { padding-left: 1.2em; }
   border: 1px solid #E4D8C8 !important;
 }
 
-/* The blue "Write a review" button and any other blue (Tailwind) elements:
-   the widget's blue is Tailwind's blue-600, so we match the bg-blue / text-blue utility classes */
-#google-reviews-widget [class*="bg-blue"] {
-  background: #8F6B3E !important;
-  border-color: #8F6B3E !important;
-  color: #FFFFFF !important;
-  border-radius: 999px !important;
-}
-#google-reviews-widget [class*="bg-blue"]:hover {
-  background: #765632 !important;
-}
-#google-reviews-widget [class*="text-blue"] {
-  color: #8F6B3E !important;
-}
-
-/* NOTE: the small "Powered by Featurable" badge is deliberately left alone.
-   The free plan requires it to be visible. */
+/* NOTE: the small "Powered by Featurable" badge and the Google logo are deliberately left alone.
+   The free plan requires the badge to stay visible. */
