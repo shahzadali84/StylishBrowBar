@@ -170,13 +170,22 @@
       <div>
         <h2>Popular treatments</h2>
         <hr class="divider">
+        <!--
+          AUTOMATED: the list below is rewritten by .github/workflows/update-popular-treatments.yml,
+          which runs scripts/update_popular_treatments.py on a schedule. It replaces everything
+          between the two markers below based on real Acuity booking counts. Don't hand-edit
+          between the markers; a manual edit here will be overwritten on the next run.
+          To change the fallback shown before the first automated run, edit the <li> lines themselves.
+        -->
         <ul class="price-list">
+<!-- POPULAR-TREATMENTS:START -->
           <li><span>Eyebrow Threading <small>10 min</small></span><span class="price">$10</span></li>
           <li><span>Brow Tint <small>10 min</small></span><span class="price">$10</span></li>
           <li><span>Henna Tint <small>15 min</small></span><span class="price">$15</span></li>
           <li><span>Brow Threading + Tint Duo <small>20 min</small></span><span class="price">$18</span></li>
           <li><span>Brow Lamination <small>40 min</small></span><span class="price">$60</span></li>
           <li><span>Lash Tint <small>10 min</small></span><span class="price">$12</span></li>
+<!-- POPULAR-TREATMENTS:END -->
         </ul>
       </div>
       <div class="info-card">
