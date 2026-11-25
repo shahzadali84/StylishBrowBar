@@ -12,10 +12,15 @@
 
   const grid = document.getElementById("review-grid");
   const status = document.getElementById("reviews-status");
-  const averageRating = document.getElementById("average-rating");
+  const averageRating = document.getElementById("reviews-average");
+  const totalReviews = document.getElementById("reviews-count");
+  const stars = document.getElementById("reviews-stars");
+  const googleLink = document.getElementById("reviews-google-link");
+  
+  /*const averageRating = document.getElementById("average-rating");
   const totalReviews = document.getElementById("total-reviews");
   const stars = document.getElementById("rating-stars");
-  const googleLink = document.getElementById("google-reviews-link");
+  const googleLink = document.getElementById("google-reviews-link");*/
 
   function setStatus(message, error) {
     if (!status) return;
@@ -189,6 +194,9 @@
         </article>
       `;
     }).join("");
+    
+    grid.hidden = false;
+    grid.removeAttribute("hidden");
   }
 
   async function loadReviews() {
