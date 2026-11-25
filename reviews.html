@@ -81,21 +81,33 @@
 
   <section class="section">
     <div class="container">
-      <!--
-        ======================================================================
-        FEATURABLE WIDGET SLOT
-        1. Create your free widget at featurable.com and copy the embed code it gives you.
-        2. Paste that code on the blank line between the two "WIDGET" comments below.
-        3. Check the page. Once your real reviews show up, delete the whole placeholder
-           <div class="review-grid"> ... </div> block further down.
-        ======================================================================
-      -->
       <div class="google-reviews-widget" id="google-reviews-widget">
-        <!-- WIDGET START -->
-        <div id="featurable-b3384703-4fcf-4397-882b-37e4ff61886e" data-featurable-async></div>
-        <script src="https://featurable.com/assets/bundle.js" defer charset="UTF-8"></script>
-        <!-- WIDGET END -->
+        <div class="reviews-summary" aria-live="polite">
+          <div class="reviews-summary-rating">
+            <span class="reviews-summary-number" id="reviews-average">—</span>
+            <span class="reviews-stars" id="reviews-stars" aria-label="Google rating"></span>
+          </div>
+          <div class="reviews-summary-copy">
+            <strong>Google Reviews</strong>
+            <span id="reviews-count">Loading reviews…</span>
+          </div>
+          <a class="reviews-google-link" id="reviews-google-link"
+             href="https://www.google.com/search?q=Stylish+Brow+Bar+Findlay+Creek+Ottawa"
+             target="_blank" rel="noopener">Read our reviews on Google</a>
+        </div>
+
+        <div id="reviews-status" class="reviews-status" role="status">
+          Loading client testimonials…
+        </div>
+
+        <div class="review-grid" id="review-grid" hidden></div>
       </div>
+
+      <noscript>
+        <p class="note">Please enable JavaScript to view our latest Google reviews.</p>
+      </noscript>
+
+      <script src="reviews-api.js" defer></script>
     </div>
   </section>
 
