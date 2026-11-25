@@ -1,9 +1,6 @@
 /**
  * Stylish Brow Bar - Featurable Reviews API
- * DIAGNOSTIC VERSION
- *
- * This file intentionally gives visible error messages if anything
- * prevents the reviews from loading.
+ * Uses the actual Featurable review field names.
  */
 
 (function () {
@@ -20,15 +17,17 @@
   const stars = document.getElementById("rating-stars");
   const googleLink = document.getElementById("google-reviews-link");
 
-  function setStatus(message, isError) {
-    if (!status) {
-      console.error("reviews-status element was not found:", message);
-      return;
-    }
+  function setStatus(message, error) {
+    if (!status) return;
 
     status.textContent = message;
-    status.style.display = "block";
-    status.style.color = isError ? "#b42318" : "";
+    status.style.display = message ? "block" : "none";
+
+    if (error) {
+      status.style.color = "#b42318";
+    } else {
+      status.style.color = "";
+    }
   }
 
   function escapeHtml(value) {
@@ -40,37 +39,13 @@
       .replace(/'/g, "&#039;");
   }
 
-  function getRating(review) {
-    return Number(review.rating ?? review.stars ?? 5);
-  }
-
-  function getName(review) {
-    return (
-      review.reviewer?.displayName ||
-      review.reviewer?.name ||
-      review.displayName ||
-      review.name ||
-      "Google reviewer"
+  function renderStars(rating) {
+    const count = Math.max(
+      0,
+      Math.min(5, Math.round(Number(rating) || 0))
     );
-  }
 
-  function getComment(review) {
-    return (
-      review.comment ||
-      review.text ||
-      review.content ||
-      ""
-    );
-  }
-
-  function getDate(review) {
-    return (
-      review.reviewDate ||
-      review.date ||
-      review.createdAt ||
-      review.publishedAt ||
-      ""
-    );
+    return "★".repeat(count) + "☆".repeat(5 - count);
   }
 
   function formatDate(value) {
@@ -79,7 +54,7 @@
     const date = new Date(value);
 
     if (Number.isNaN(date.getTime())) {
-      return escapeHtml(value);
+      return "";
     }
 
     return date.toLocaleDateString("en-CA", {
@@ -87,16 +62,6 @@
       month: "long",
       day: "numeric"
     });
-  }
-
-  function renderStars(rating) {
-    const rounded = Math.max(
-      0,
-      Math.min(5, Math.round(Number(rating) || 0))
-    );
-
-    return "★".repeat(rounded) +
-      "☆".repeat(5 - rounded);
   }
 
   function getInitials(name) {
@@ -116,10 +81,13 @@
   }
 
   function renderReviews(data) {
-    if (!data || typeof data !== "object") {
-      throw new Error("Featurable returned an invalid JSON response.");
+    if (!grid) {
+      throw new Error(
+        "reviews.html is missing the #review-grid element."
+      );
     }
 
+    // Featurable's current response uses these exact fields.
     const reviews = Array.isArray(data.reviews)
       ? data.reviews
       : [];
@@ -129,9 +97,15 @@
       data.totalReviewCount || reviews.length
     );
 
+    console.log(
+      "Stylish Brow Bar reviews: rendering",
+      reviews.length,
+      "reviews"
+    );
+
     if (averageRating) {
       averageRating.textContent =
-        rating ? rating.toFixed(1) : "—";
+        rating > 0 ? rating.toFixed(1) : "—";
     }
 
     if (totalReviews) {
@@ -149,29 +123,41 @@
         "https://www.google.com/search?q=Stylish+Brow+Bar+Ottawa";
     }
 
-    if (!grid) {
-      throw new Error(
-        "The #review-grid element was not found in reviews.html."
-      );
-    }
-
     if (!reviews.length) {
       grid.innerHTML =
-        '<p class="reviews-status">Featurable returned no reviews.</p>';
+        '<p class="reviews-status">No reviews are currently available.</p>';
       return;
     }
 
     grid.innerHTML = reviews.map(function (review) {
-      const name = getName(review);
-      const comment = getComment(review);
-      const rating = getRating(review);
-      const date = formatDate(getDate(review));
+      // These are the actual fields returned by Featurable.
+      const name =
+        review.reviewer?.displayName ||
+        "Google reviewer";
+
+      const comment = review.comment || "";
+
+      const reviewRating =
+        Number(review.starRating || 0);
+
+      const date =
+        formatDate(review.createTime || review.updateTime);
+
+      const photoUrl =
+        review.reviewer?.profilePhotoUrl || "";
+
+      const avatar = photoUrl
+        ? `<img src="${escapeHtml(photoUrl)}"
+                alt=""
+                class="custom-review-avatar-image"
+                loading="lazy">`
+        : escapeHtml(getInitials(name));
 
       return `
         <article class="custom-review">
           <div class="custom-review-stars"
-               aria-label="${escapeHtml(rating)} out of 5 stars">
-            ${escapeHtml(renderStars(rating))}
+               aria-label="${escapeHtml(reviewRating)} out of 5 stars">
+            ${escapeHtml(renderStars(reviewRating))}
           </div>
 
           <p class="custom-review-text">
@@ -180,16 +166,17 @@
 
           <div class="custom-review-footer">
             <div class="custom-review-avatar" aria-hidden="true">
-              ${escapeHtml(getInitials(name))}
+              ${avatar}
             </div>
 
-            <div>
+            <div class="custom-review-person">
               <div class="custom-review-name">
                 ${escapeHtml(name)}
               </div>
+
               ${
                 date
-                  ? `<div class="custom-review-date">${date}</div>`
+                  ? `<div class="custom-review-date">${escapeHtml(date)}</div>`
                   : ""
               }
             </div>
@@ -205,7 +192,7 @@
   }
 
   async function loadReviews() {
-    setStatus("Connecting to Google reviews…", false);
+    setStatus("Loading reviews…", false);
 
     try {
       console.log(
@@ -245,9 +232,10 @@
       renderReviews(data);
 
       setStatus("", false);
-      if (status) {
-        status.style.display = "none";
-      }
+
+      console.log(
+        "Stylish Brow Bar reviews: rendering completed successfully."
+      );
 
     } catch (error) {
       console.error(
@@ -257,26 +245,15 @@
 
       setStatus(
         "Unable to load reviews. " +
-        (error && error.message
-          ? error.message
-          : "Unknown error.") +
-        " Open your browser console for details.",
+        (error?.message || "Unknown error."),
         true
       );
     }
   }
 
-  // This confirms that the JavaScript file itself loaded.
   console.log(
     "Stylish Brow Bar reviews-api.js loaded successfully."
   );
-
-  if (!grid) {
-    setStatus(
-      "Error: #review-grid was not found in reviews.html.",
-      true
-    );
-  }
 
   loadReviews();
 })();
