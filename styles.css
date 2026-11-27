@@ -274,6 +274,8 @@ ul { padding-left: 1.2em; }
 .review blockquote { margin: 0 0 1rem; font-family: var(--font-head); font-size: 1.1rem; line-height: 1.55; }
 .review figcaption { font-size: 0.92rem; color: var(--muted); }
 .review figcaption strong { color: var(--charcoal); }
+.google-reviews-widget { margin-bottom: 2rem; }
+.google-reviews-widget:empty { display: none; }
 .rating-summary { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 2rem; }
 .rating-summary .big { font-family: var(--font-head); font-size: 3rem; font-weight: 700; line-height: 1; }
 
@@ -334,137 +336,6 @@ ul { padding-left: 1.2em; }
 }
 
 /* ==========================================================================
-   Featurable reviews widget: match the Stylish Brow Bar look   (version 2)
-   HOW TO USE: in styles.css, DELETE the earlier "Featurable reviews widget" block
-   (from its comment to the end of the file) and paste this whole file in its place,
-   at the very end of styles.css. Do not use Featurable's own custom-CSS box.
-
-   Built from the real widget HTML. Where Featurable publishes stable class names
-   (.summary-bar__btn, .review__reviewer-name ...) we use those. Colours are set with
-   !important because the widget sets some colours inline (e.g. the stars).
-   Palette: cream #FBF7F1, charcoal #2D2A27, muted #625A53, line #E4D8C8,
-   gold #B8935A (stars), dark gold #8F6B3E (buttons/links).
-   ========================================================================== */
-
-#google-reviews-widget {
-  max-width: 1100px;
-  margin: 0 auto 2rem;
-  color: #2D2A27;
-}
-
-/* Fonts: site body font everywhere, site serif for headings */
-#google-reviews-widget,
-#google-reviews-widget * {
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
-}
-#google-reviews-widget h1,
-#google-reviews-widget h2,
-#google-reviews-widget h3,
-#google-reviews-widget h4 {
-  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif !important;
-  color: #2D2A27 !important;
-  font-weight: 600 !important;
-}
-
-/* ---------- Summary bar ("Excellent 5.0 · Google · Based on 61 reviews · Write a review") ---------- */
-#google-reviews-widget .summary-bar {
-  background: #FFFFFF !important;
-  border: 1px solid #E4D8C8 !important;
-  border-radius: 14px !important;
-  box-shadow: 0 8px 24px rgba(45, 42, 39, 0.08) !important;
-}
-#google-reviews-widget .summary-bar__label {
-  color: #2D2A27 !important;
-  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif !important;
-  font-weight: 600 !important;
-}
-#google-reviews-widget .summary-bar__rating {
-  color: #2D2A27 !important;
-  font-weight: 600 !important;
-}
-#google-reviews-widget .summary-bar__sublabel {
-  color: #625A53 !important;
-}
-#google-reviews-widget .summary-bar__profile-link {
-  color: #8F6B3E !important;
-}
-
-/* "Write a review" button */
-#google-reviews-widget .summary-bar__btn {
-  background: #8F6B3E !important;
-  border: 2px solid #8F6B3E !important;
-  color: #FFFFFF !important;
-  border-radius: 999px !important;
-  font-weight: 600 !important;
-}
-#google-reviews-widget .summary-bar__btn:hover {
-  background: #765632 !important;
-  border-color: #765632 !important;
-}
-
-/* ---------- Stars (the widget sets their colour inline, so !important is needed) ---------- */
-#google-reviews-widget .star-rating__fill span,
-#google-reviews-widget .star-rating__fill svg {
-  color: #B8935A !important;
-}
-#google-reviews-widget .star-rating__empty span,
-#google-reviews-widget .star-rating__empty svg {
-  color: #E4D8C8 !important;
-}
-/* stars inside the review cards */
-#google-reviews-widget [class*="StarRating-module__starFilled"] {
-  color: #B8935A !important;
-  fill: #B8935A !important;
-}
-#google-reviews-widget [class*="StarRating-module__starEmpty"] {
-  color: #E4D8C8 !important;
-  fill: #E4D8C8 !important;
-}
-
-/* ---------- Review cards ---------- */
-#google-reviews-widget [class*="ReviewCard-module__reviewCard"] {
-  background: #FFFFFF !important;
-  border: 1px solid #E4D8C8 !important;
-  border-radius: 14px !important;
-  box-shadow: 0 8px 24px rgba(45, 42, 39, 0.08) !important;
-  color: #2D2A27 !important;
-}
-#google-reviews-widget .review__reviewer-name {
-  color: #2D2A27 !important;
-  font-weight: 600 !important;
-}
-#google-reviews-widget [class*="review__date"] {
-  color: #625A53 !important;
-}
-/* review text: serif, like the rest of the site's quotes */
-#google-reviews-widget [class*="ReviewCard-module__reviewBody"] {
-  color: #2D2A27 !important;
-  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif !important;
-  font-size: 1.05rem !important;
-  line-height: 1.55 !important;
-}
-#google-reviews-widget [class*="ReviewCard-module__readMore"] {
-  color: #8F6B3E !important;
-}
-/* round initial avatars (shown when a reviewer has no photo): one calm gold instead of random colours */
-#google-reviews-widget [class*="ReviewCard-module__fallback"] {
-  background-color: #B8935A !important;
-  color: #FFFFFF !important;
-}
-
-/* ---------- Carousel arrows ---------- */
-#google-reviews-widget [class*="Carousel-module__btn"],
-#google-reviews-widget [class*="Slider-module__btn"] {
-  background: #FFFFFF !important;
-  color: #8F6B3E !important;
-  border: 1px solid #E4D8C8 !important;
-}
-
-/* NOTE: the small "Powered by Featurable" badge and the Google logo are deliberately left alone.
-   The free plan requires the badge to stay visible. */
-
-
-/* ==========================================================================
    Additions (Nov 2026): service icons, clock icons, yellow parking note, top bar
    Paste this at the END of styles.css.
    ========================================================================== */
@@ -514,3 +385,37 @@ ul { padding-left: 1.2em; }
 .topbar .social a { width: 34px; height: 34px; border: 1px solid var(--gold-light); color: var(--gold-light); }
 .topbar .social a:hover { background: var(--gold-light); color: var(--charcoal); }
 .topbar .social svg { width: 17px; height: 17px; }
+
+/* ---------- Contact form (Formspree) ---------- */
+.contact-form {
+  max-width: 720px; margin: 0 auto;
+  background: var(--white); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow);
+}
+.form-row { display: grid; gap: 18px; grid-template-columns: 1fr; margin-bottom: 18px; }
+@media (min-width: 640px) { .form-row { grid-template-columns: 1fr 1fr; } }
+.form-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
+.form-row .form-field { margin-bottom: 0; }
+.form-field label { font-weight: 600; font-size: 0.95rem; color: var(--charcoal); }
+.form-field label .small { font-weight: 500; color: var(--muted); }
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form input[type="tel"],
+.contact-form select,
+.contact-form textarea {
+  font: inherit; color: var(--charcoal); background: var(--cream);
+  border: 1px solid var(--line); border-radius: 10px; padding: 11px 14px;
+  width: 100%;
+}
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  outline: 3px solid var(--gold); outline-offset: 1px; border-color: var(--gold-dark);
+}
+.contact-form textarea { resize: vertical; min-height: 110px; }
+.contact-form .btn { margin-top: 4px; }
+/* Honeypot: hidden via a CSS class (not an inline style), per Formspree's guidance,
+   kept off-screen rather than display:none so screen readers/autofill behave predictably. */
+.hp-field {
+  position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;
+}
