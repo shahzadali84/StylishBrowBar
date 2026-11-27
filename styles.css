@@ -36,7 +36,7 @@ body {
   background: var(--cream);
   color: var(--charcoal);
   font-family: var(--font-body);
-  font-size: 1.0625rem;
+  font-size: 0.95rem; /* lowered from 1.0625rem (17px -> 15.2px) */
   line-height: 1.65;
   padding-bottom: 76px; /* room for the mobile book bar */
 }
@@ -223,7 +223,7 @@ ul { padding-left: 1.2em; }
   border-radius: var(--radius); padding: 26px; box-shadow: var(--shadow);
 }
 .card h3 { margin-bottom: 0.4em; }
-.card p { color: var(--muted); }
+.card p { color: var(--muted); font-size: 0.9rem; /* ~14.4px (down from 17px) */ line-height: 1.55; }
 .card .from { font-weight: 700; color: var(--gold-dark); margin-bottom: 0.4rem; }
 .card-link { font-weight: 600; text-decoration: none; }
 .card-link:hover { text-decoration: underline; }
