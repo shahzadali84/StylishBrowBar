@@ -187,12 +187,15 @@ ul { padding-left: 1.2em; }
   text-transform: uppercase; color: var(--gold-dark);
 }
 .hero-sub {
-  font-family: var(--font-head); font-size: clamp(1.05rem, 3vw, 1.3rem);
+  font-family: var(--font-head);
+  font-size: clamp(0.92rem, 2.2vw, 1.08rem);
   font-weight: 500;
-  color: var(--rose-dark); margin-bottom: 0.5rem;
+  letter-spacing: 0.04em;
+  color: var(--rose-dark);
+  margin-bottom: 0.5rem;
 }
 .hero .btn-row { justify-content: center; }
-.h1-sub { display: inline-block; margin-top: 0.3em; font-size: 0.52em; font-weight: 500; line-height: 1.3; color: var(--rose-dark); }
+.h1-sub { display: inline-block; margin-top: 0.3em; font-size: 0.40em; font-weight: 500; line-height: 1.3; color: var(--rose-dark); }
 .page-hero { padding: 40px 0 44px; background: linear-gradient(160deg, var(--beige), var(--cream)); }
 .page-hero p.lead { max-width: 680px; margin-bottom: 0; }
 .breadcrumb { font-size: 0.88rem; color: var(--muted); margin-bottom: 0.8rem; }
